@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Etudiant
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $nce;
     #[ORM\Column(type: 'string', length: 255)]
@@ -53,7 +52,17 @@ class Etudiant
     }
 
 
-        /**
+
+    public function setNce(int $nce): self
+    {
+        $this->nce = $nce;
+
+        return $this;
+    }
+
+
+
+    /**
      * @return Collection|Soutenance[]
      */
     public function getSoutenances(): Collection
@@ -69,5 +78,20 @@ class Etudiant
         }
 
         return $this;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('nce')   // Add matricule field
+            ->add('nom')
+            ->add('prenom');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Etudiant::class,
+        ]);
     }
 }

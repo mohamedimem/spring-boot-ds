@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Etudiant;
 use App\Entity\Soutenance;
+use App\Form\EtudiantType;
 use App\Form\SoutenanceType;
 use App\Repository\SoutenanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
+use Psr\Log\LoggerInterface;
+
+
 
 #[Route('/soutenance')]
 final class SoutenanceController extends AbstractController
@@ -21,25 +27,27 @@ final class SoutenanceController extends AbstractController
             'soutenances' => $soutenanceRepository->findAll(),
         ]);
     }
+    public function __construct(private LoggerInterface $logger) {}
 
-    #[Route('/new', name: 'app_soutenance_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'nouvel_soutenance', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $soutenance = new Soutenance();
-        $form = $this->createForm(SoutenanceType::class, $soutenance);
+
+        $etudiant = new Soutenance();
+        $form = $this->createForm(SoutenanceType::class, $etudiant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($soutenance);
+            $entityManager->persist($etudiant);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_soutenance_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('soutenance/new.html.twig', [
-            'soutenance' => $soutenance,
+            'etudiant' => $etudiant,
             'form' => $form,
         ]);
+
     }
 
     #[Route('/{numjury}', name: 'app_soutenance_show', methods: ['GET'])]

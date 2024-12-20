@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Enseignant
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $matricule;
     #[ORM\Column(type: 'string', length: 255)]
@@ -82,5 +81,19 @@ class Enseignant
         }
 
         return $this;
+    }
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('matricule', TextType::class)   // Add matricule field
+            ->add('nom')
+            ->add('prenom');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Enseignant::class,
+        ]);
     }
 }

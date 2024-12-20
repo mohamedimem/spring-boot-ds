@@ -1,0 +1,36 @@
+{# templates/statics/statistics.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}University Statistics{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>University Statistics</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Students</h5>
+                        <p class="card-text">{{ students }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Teachers</h5>
+                        <p class="card-text">{{ teachers }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Defenses</h5>
+                        <p class="card-text">{{ defenses }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

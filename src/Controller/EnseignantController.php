@@ -78,4 +78,12 @@ final class EnseignantController extends AbstractController
 
         return $this->redirectToRoute('app_enseignant_index', [], Response::HTTP_SEE_OTHER);
     }
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('matricule', TextType::class)   // Add matricule field here
+            ->add('nom')
+            ->add('prenom');
+    }
+
 }

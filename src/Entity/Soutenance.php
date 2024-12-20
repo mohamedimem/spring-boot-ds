@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SoutenanceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SoutenanceRepository::class)]
 class Soutenance
@@ -11,26 +12,29 @@ class Soutenance
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $numjury;
+    private ?int $numjury = null;
+
     #[ORM\Column(type: 'date')]
-    private $dateSoutenance;
+    #[Assert\NotBlank]
+    private ?\DateTimeInterface $dateSoutenance = null;
 
     #[ORM\Column(type: 'float')]
-    private $note;
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 0, max: 20)]
+    private ?float $note = null;
 
     #[ORM\ManyToOne(targetEntity: Enseignant::class, inversedBy: 'soutenances')]
     #[ORM\JoinColumn(name: 'matricule', referencedColumnName: 'matricule', nullable: false)]
-    private $enseignant;
+    private ?Enseignant $enseignant = null;
 
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'soutenances')]
     #[ORM\JoinColumn(name: 'nce', referencedColumnName: 'nce', nullable: false)]
-    private $etudiant;
+    private ?Etudiant $etudiant = null;
 
     public function getNumjury(): ?int
     {
         return $this->numjury;
     }
-
     public function getDateSoutenance(): ?\DateTimeInterface
     {
         return $this->dateSoutenance;

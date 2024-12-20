@@ -9,12 +9,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnseignantType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('matricule')  // Explicitly add matricule field
             ->add('nom')
-            ->add('prenom')
-        ;
+            ->add('prenom');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
